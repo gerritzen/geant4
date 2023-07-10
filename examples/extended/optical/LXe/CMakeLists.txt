@@ -14,6 +14,8 @@ if(WITH_GEANT4_UIVIS)
 else()
   find_package(Geant4 REQUIRED)
 endif()
+find_package(NEST REQUIRED)
+include_directories(${NEST_INCLUDE_DIRS})
 
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
@@ -33,6 +35,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #
 add_executable(LXe LXe.cc ${sources} ${headers})
 target_link_libraries(LXe ${Geant4_LIBRARIES} )
+target_link_libraries(LXe NEST::NESTCore NEST::NESTG4)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we

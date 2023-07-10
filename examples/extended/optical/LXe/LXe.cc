@@ -42,6 +42,7 @@
 #include "G4UIExecutive.hh"
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
+#include "LXeOpticalPhysics.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -62,7 +63,7 @@ int main(int argc, char** argv)
   G4VModularPhysicsList* physicsList = new FTFP_BERT;
   physicsList->ReplacePhysics(new G4EmStandardPhysics_option4());
 
-  G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
+  LXeOpticalPhysics* opticalPhysics = new LXeOpticalPhysics();
   auto opticalParams               = G4OpticalParameters::Instance();
 
   opticalParams->SetWLSTimeProfile("delta");

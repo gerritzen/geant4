@@ -31,11 +31,12 @@
 #ifndef LXeStackingAction_h
 #define LXeStackingAction_h 1
 
+#include "NESTStackingAction.hh"
 #include "G4UserStackingAction.hh"
 
 class LXeEventAction;
 
-class LXeStackingAction : public G4UserStackingAction
+class LXeStackingAction : public NESTStackingAction
 {
  public:
   LXeStackingAction(LXeEventAction*);

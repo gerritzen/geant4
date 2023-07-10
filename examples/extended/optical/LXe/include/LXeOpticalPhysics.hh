@@ -24,49 +24,23 @@
 // ********************************************************************
 //
 //
-/// \file optical/LXe/src/LXeStackingAction.cc
-/// \brief Implementation of the LXeStackingAction class
+/// \file optical/LXe/include/LXeOpticalPhysics.hh
+/// \brief Definition of the LXeOpticalPhysics class
 //
 //
-#include "LXeStackingAction.hh"
+#ifndef LXeOpticalPhysics_h
+#define LXeOpticalPhysics_h 1
+#include "G4OpticalPhysics.hh"
 
-#include "LXeEventAction.hh"
-
-#include "G4OpticalPhoton.hh"
-#include "G4Track.hh"
-#include "G4VProcess.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-LXeStackingAction::LXeStackingAction(LXeEventAction* ea)
-  : fEventAction(ea)
-{}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-LXeStackingAction::~LXeStackingAction() {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-G4ClassificationOfNewTrack LXeStackingAction::ClassifyNewTrack(
-  const G4Track* aTrack)
+class LXeOpticalPhysics : public G4OpticalPhysics
 {
-  // Count what process generated the optical photons
-  if(aTrack->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition())
-  {
-    // particle is optical photon
-    if(aTrack->GetParentID() > 0)
-    {
-      // particle is secondary
-      if(aTrack->GetCreatorProcess()->GetProcessName() == "S1")
-        fEventAction->IncPhotonCount_Scint();
-      else if(aTrack->GetCreatorProcess()->GetProcessName() == "Cerenkov")
-        fEventAction->IncPhotonCount_Ceren();
-    }
-  }
-  savedManager = stackManager;
-  if (aTrack->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
-     return fWaiting;
-  }
-  return fUrgent;
-}
+public:
+  // TODO: set verbosity via messenger
+  LXeOpticalPhysics() : G4OpticalPhysics(1, "LXeOpticalPhysics") { }
+  virtual ~LXeOpticalPhysics() { }
+
+  void ConstructProcess();
+  void ConstructParticle();
+};
+
+#endif
